@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hypertension Risk Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Hypertension Risk Predictor</h1>
+        <form id="riskForm" action="/predict" method="post">
+            {% set f = request.form %}
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="age">
+                        Age:
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">Enter your age in years</span>
+                        </span>
+                    </label>
+                    <input type="number" id="age" name="age" min="0" max="100" value="{{ f.age }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="glucose">
+                        Fasting Glucose (mg/dL):
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">Normal range: 70-100 mg/dL</span>
+                        </span>
+                    </label>
+                    <input type="number" id="glucose" name="glucose" min="50" max="300" value="{{ f.glucose }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="bmi">
+                        BMI:
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">Body Mass Index</span>
+                        </span>
+                    </label>
+                    <input type="number" id="bmi" name="bmi" min="10" max="50" step="0.1" value="{{ f.bmi }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ldl">
+                        LDL Cholesterol (mg/dL):
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">Optimal: Less than 100 mg/dL</span>
+                        </span>
+                    </label>
+                    <input type="number" id="ldl" name="ldl" min="20" max="300" value="{{ f.ldl }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="triglycerides">
+                        Triglycerides (mg/dL):
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">Normal: Less than 150 mg/dL</span>
+                        </span>
+                    </label>
+                    <input type="number" id="triglycerides" name="triglycerides" min="20" max="500" value="{{ f.triglycerides }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sedentary">
+                        Sedentary Activity Ratio:
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">How much of your day is spent inactive?</span>
+                        </span>
+                    </label>
+                    <input type="number" id="sedentary" name="sedentary" value="{{ f.sedentary }}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="carbs">
+                        Avg Daily Carbs (g):
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">Recommended: 225-325g for 2000 calorie diet</span>
+                        </span>
+                    </label>
+                    <input type="number" id="carbs" name="carbs" min="0" max="500" value="{{ f.carbs }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="diet">
+                        Current Diet:
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">Select your diet</span>
+                        </span>
+                    </label>
+                    <select id="diet" name="diet" required>
+                        {% for option in [
+                            'No Special Diet', 'Diabetic Diet', 'Low Sugar Diet', 'Low Fat Diet',
+                            'Weight Gain Diet', 'Weight Loss Diet', 'Low Salt Diet', 'Renal Diet',
+                            'Low Carb Diet', 'Gluten-Free Diet', 'High Fiber Diet', 'Other Diet',
+                            'High Protein Diet', 'Low Fiber Diet'] %}
+                            <option value="{{ option }}" {% if f.diet == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="potassium">
+                        Avg Potassium (mg):
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">Recommended: 3,500-4,700 mg per day</span>
+                        </span>
+                    </label>
+                    <input type="number" id="potassium" name="potassium" value="{{ f.potassium }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="calcium">
+                        Avg Calcium (mg):
+                        <span class="tooltip">
+                            <span class="tooltip-icon">?</span>
+                            <span class="tooltip-text">Recommended: 1,000-1,200 mg per day</span>
+                        </span>
+                    </label>
+                    <input type="number" id="calcium" name="calcium" value="{{ f.calcium }}" required>
+                </div>
+            </div>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction is not none %}
+            <div class="prediction">
+                <strong>Prediction:</strong> {{ 'Has Hypertension' if prediction == 1 else 'No Hypertension' }}
+            </div>
+            {% if feedback %}
+                <div class="feedback">
+                    <strong>Suggestions:</strong>
+                    <ul>
+                        {% for suggestion in feedback %}
+                            <li>{{ suggestion }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
