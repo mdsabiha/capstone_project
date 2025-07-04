@@ -104,7 +104,6 @@ Open your browser and go to `http://localhost:5000`.
 
 - **Prediction**: "You are likely to have Hypertension"  
 - **Confidence Score**: 0.87  
-- **Recommendations**: (optional placeholder for future integration)
 
 ---
 
