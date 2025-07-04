@@ -1,101 +1,134 @@
-# 🩺 Hypertension Prediction Using Lifestyle and Health Data
+# 🧠 Hypertension Prediction Web App
 
-This project focuses on predicting hypertension using lifestyle patterns, demographic details, and health-related indicators. It aims to help understand risk factors and build a reliable machine learning model for early detection and prevention of hypertension.
-
----
-
-## 📌 Project Objective
-
-Hypertension (high blood pressure) is a silent yet critical health concern affecting millions worldwide. This project leverages health data to:
-- Analyze and identify factors contributing to hypertension
-- Build predictive models using machine learning algorithms
-- Provide interpretable results to aid healthcare professionals and researchers
+This is a full-stack machine learning web application that predicts the likelihood of hypertension based on user input related to health and lifestyle. The model is trained using real-world health survey data and deployed using Flask.
 
 ---
 
-## 📁 Repository Structure
+## 🚀 Project Overview
+
+Hypertension, or high blood pressure, is a critical health issue that often goes undetected. This project aims to:
+- Identify key lifestyle and biological indicators influencing hypertension
+- Predict the probability of an individual being hypertensive
+- Provide an easy-to-use web interface for healthcare or personal use
+
+---
+
+## 🗂️ Repository Structure
 
 ```
-hypertension-prediction/
-├── Group_6(Hypertension_Prediction).ipynb     # Main Jupyter Notebook
-├── README.md                                  # Project documentation (this file)
-├── LICENSE                                    # MIT License (if included)
-└── data/                                      # Folder for datasets (optional)
+├── __pycache__/                   # Cached Python files
+├── static/                        # CSS, JS, or image files for frontend
+├── templates/                     # HTML files (Flask views)
+│   └── index.html                 # Main UI template
+├── app.py                         # Flask application script
+├── hypertension_model.pkl         # Trained machine learning model
+├── logs.log                       # Application log file
+├── requirements.txt               # Python dependencies
+├── runtime.txt                    # Python version for deployment
+├── Procfile                       # Heroku deployment instruction
+└── README.md                      # Project documentation (this file)
 ```
 
 ---
 
-## 🧬 Dataset Description
+## 📊 Features & Functionality
 
-The dataset includes both numerical and categorical health indicators, sourced from public health survey data. Key features include:
-- **Demographics**: Age, Gender, Ethnicity, Education, Income
-- **Health Metrics**: Blood pressure, BMI, Waist Circumference, Glucose, Cholesterol
-- **Dietary Intake**: Sodium, Potassium, Fiber, Fats, Vitamins
-- **Lifestyle**: Smoking status, Physical activity (moderate/vigorous), Sedentary time
+- 🧠 **Machine Learning Model**:
+  - Trained using LightGBM, Random Forest, and AutoML (PyCaret)
+  - Accuracy: ~86% with strong recall and AUC scores
 
----
+- 📄 **Input Parameters**:
+  - Age, Gender, Ethnicity
+  - BMI, Waist Circumference
+  - Glucose, Cholesterol, Smoking habits
+  - Physical activity and sedentary time
+  - Sodium, Potassium, Dietary fiber
 
-## 🧠 ML Workflow
-
-1. **Data Preprocessing**
-   - Missing value handling
-   - Label encoding and normalization
-   - Creation of derived columns (e.g., average BP, age groups)
-
-2. **Exploratory Data Analysis (EDA)**
-   - Distribution plots and boxplots
-   - Correlation heatmaps
-   - Crosstabs and group comparisons
-
-3. **Modeling**
-   - Logistic Regression
-   - Random Forest
-   - LightGBM
-   - AutoML with PyCaret
-
-4. **Evaluation**
-   - Accuracy, Precision, Recall, F1-score
-   - Confusion Matrix
-   - ROC-AUC Curve
-
-5. **Interpretability**
-   - Feature importance analysis
-   - SHAP-based interpretation (optional)
+- 🌐 **Web Application**:
+  - Built with Flask (Python)
+  - Simple, interactive HTML interface using Jinja2 templates
+  - Displays prediction results on submission
 
 ---
 
-## 📊 Key Insights
+## 🧪 Model Training Workflow (Summary)
 
-- **BMI, Waist Circumference, and Glucose levels** are strong predictors of hypertension.
-- High **sodium intake** and **low fiber** consumption correlate with elevated BP risk.
-- **Physical inactivity** and **smoking** show a significant impact on hypertension rates.
-- **Random Forest** and **LightGBM** yielded the best results with >85% accuracy.
-
----
-
-## 🔬 Tools & Technologies
-
-- Python
-  - Pandas, NumPy, Scikit-learn
-  - Matplotlib, Seaborn
-  - PyCaret, LightGBM
-- Jupyter Notebook
-- Microsoft Excel / Power BI (optional for data exploration)
+- Data preprocessing & cleaning (handled in notebook)
+- Feature engineering using domain knowledge
+- EDA: Correlation heatmaps, distributions, and boxplots
+- Model comparison via PyCaret
+- Final model exported as `hypertension_model.pkl`
 
 ---
 
-## 📈 Evaluation Metrics
+## ✅ How to Run the App Locally
 
-- **Confusion Matrix**: To visualize TP/FP/FN/TN
-- **F1 Score**: To handle class imbalance
-- **ROC-AUC**: To measure classifier performance
-- **Precision/Recall**: For medical prediction relevance
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/hypertension-prediction-app.git
+cd hypertension-prediction-app
+```
+
+### 2. Create a Virtual Environment (optional but recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate  # For Linux/Mac
+venv\Scripts\activate     # For Windows
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the Application
+
+```bash
+python app.py
+```
+
+Open your browser and go to `http://localhost:5000`.
 
 ---
 
-## 👥 Team Members
+## 🌐 Deployed Version
 
-This project was developed by **Group 6 – Capstone Team**:
+> 💡 Hosted on Heroku  
+(https://capstone-project-kdj1.onrender.com/)
+---
+
+## 🧾 Sample Output
+
+- **Prediction**: "You are likely to have Hypertension"  
+- **Confidence Score**: 0.87  
+- **Recommendations**: (optional placeholder for future integration)
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: HTML5, CSS (via `static/`), Jinja2 templates
+- **Backend**: Flask, Python
+- **ML Tools**: PyCaret, scikit-learn, LightGBM
+- **Deployment**: Heroku (Procfile + runtime.txt)
+
+---
+
+## 📚 Future Enhancements
+
+- Add charts/graphs to display insights dynamically
+- Integrate patient history database
+- Deploy with Streamlit for better UI/UX
+- Add multilingual support
+
+---
+
+## 👨‍💻 Authors
+
+**Group 6 – Capstone Team**  
 - Harish Kumar Dakshinamoorthy  
 - Sabiha Begum Mohammed  
 - Sarath Krishna Marath  
@@ -104,22 +137,6 @@ This project was developed by **Group 6 – Capstone Team**:
 
 ---
 
-## 🪪 License
+## 📄 License
 
-This project is open-source and available under the [MIT License](LICENSE).
-
----
-
-## ✅ How to Run
-
-1. Clone the repository
-2. Open `Group_6(Hypertension_Prediction).ipynb` in Jupyter Notebook
-3. Execute the cells in sequence to view EDA, modeling, and evaluation outputs
-
----
-
-## 💡 Future Improvements
-
-- Integrate a live dashboard (e.g., Streamlit or Power BI)
-- Expand dataset with time-series or longitudinal data
-- Implement model deployment via API
+This project is licensed under the MIT License –
